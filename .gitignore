@@ -1,0 +1,12 @@
+samb
+.env
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+# Ignore Python bytecode files
+*.py[cod]
+# Ignore virtual environment directories
+venv/
+env/
+__init__.py
