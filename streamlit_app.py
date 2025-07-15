@@ -128,6 +128,18 @@ def main():
                 # Run the multi-agent analysis
                 result = run_financial_analysis(stock_symbol)
                 
+                # Ensure result is a string for display
+                if not isinstance(result, str):
+                    # Handle CrewOutput or other objects
+                    if hasattr(result, 'raw'):
+                        result = str(result.raw)
+                    elif hasattr(result, 'output'):
+                        result = str(result.output)
+                    elif hasattr(result, 'result'):
+                        result = str(result.result)
+                    else:
+                        result = str(result)
+                
                 progress_bar.progress(80)
                 status_text.text("📝 Generating professional report...")
                 time.sleep(1)

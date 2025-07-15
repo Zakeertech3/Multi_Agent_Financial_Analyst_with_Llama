@@ -279,6 +279,18 @@ Data Date: {info['latest_date']}
             # Run the analysis
             result = run_financial_analysis(symbol.upper())
             
+            # Ensure result is a string
+            if not isinstance(result, str):
+                # Handle CrewOutput or other objects
+                if hasattr(result, 'raw'):
+                    result = str(result.raw)
+                elif hasattr(result, 'output'):
+                    result = str(result.output)
+                elif hasattr(result, 'result'):
+                    result = str(result.result)
+                else:
+                    result = str(result)
+            
             if not quiet:
                 duration = time.time() - start_time
                 print(f"✅ Analysis completed in {duration:.1f} seconds")

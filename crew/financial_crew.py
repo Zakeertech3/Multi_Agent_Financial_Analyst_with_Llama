@@ -59,7 +59,16 @@ class FinancialCrew:
             # Execute the analysis
             result = self.crew.kickoff()
             
-            return result
+            # Extract text content from CrewOutput object
+            if hasattr(result, 'raw'):
+                return str(result.raw)
+            elif hasattr(result, 'output'):
+                return str(result.output)
+            elif hasattr(result, 'result'):
+                return str(result.result)
+            else:
+                # Fallback: convert to string
+                return str(result)
             
         except Exception as e:
             return f"Error during analysis: {str(e)}"
@@ -69,4 +78,10 @@ class FinancialCrew:
 def run_financial_analysis(symbol: str):
     """Run financial analysis for a given stock symbol"""
     crew = FinancialCrew()
-    return crew.analyze_stock(symbol)
+    result = crew.analyze_stock(symbol)
+    
+    # Ensure we return a string
+    if isinstance(result, str):
+        return result
+    else:
+        return str(result)
